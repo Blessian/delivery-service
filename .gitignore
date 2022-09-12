@@ -396,3 +396,6 @@ $RECYCLE.BIN/
 
 # Secrets
 secrets.json
+
+#DB
+data
