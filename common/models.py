@@ -29,12 +29,9 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, username, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(username, password, **extra_fields)
 
@@ -54,11 +51,16 @@ class User(AbstractBaseUser, PermissionsMixin):
             'unique': _('A user with that username already exists.'),
         },
     )
+    is_staff = models.BooleanField(
+        _("staff status"),
+        default=False,
+        help_text=_("Designates whether the user can log into this admin site."),
+    )
 
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['username', 'password']
+    REQUIRED_FIELDS = ['password']
 
     class Meta:
         verbose_name = _('user')
