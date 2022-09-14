@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.serializers import raise_errors_on_nested_writes
+
 from .models import User
 
 
@@ -12,4 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ['id', 'username', 'password', 'is_staff']
+        read_only_fields = ['is_staff']
+        # extra_kwargs = {
+        #     'password': {'write_only': True}
+        # }

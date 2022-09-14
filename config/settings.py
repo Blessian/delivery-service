@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 import common.apps
+import coupon.apps
 import delivery.apps
 from common import get_secret
 
@@ -41,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'common.apps.CoreConfig',
     'delivery.apps.DeliveryConfig',
+    'coupon.apps.CouponConfig',
 ]
 
 MIDDLEWARE = [

@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api_auth/', include('rest_framework.urls')),          # Django에서 기본 제공하는 로그인을 사용하기 위함
     path('common/', include('common.urls')),
     path('delivery/', include('delivery.urls')),
 ]

@@ -1,8 +1,10 @@
 from django.db import models
+from django.apps import apps
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
+import unicodedata
 
 
 # Create your models here.
@@ -16,7 +18,12 @@ class UserManager(BaseUserManager):
         if not username:
             raise ValueError('The given username must be set')
 
-        username = self.normalize_username(username)
+        # AbstractBaseUser.normalize_username()을 사용하기 위함
+        # noinspection PyProtectedMember
+        global_user_model = apps.get_model(
+            self.model._meta.app_label, self.model._meta.object_name
+        )
+        username = global_user_model.normalize_username(username)
         user = self.model(username=username, **extra_fields)
         user.password = make_password(password)
         user.save(using=self._db)
