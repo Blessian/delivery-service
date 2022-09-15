@@ -32,9 +32,9 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         사용자 권한 부여
         """
-        if self.action is 'update' and 'partial_update' and 'destroy':
+        if self.action in ('update', 'partial_update', 'destroy'):
             permission_classes = [IsAuthenticated]
-        elif self.action is 'list':
+        elif self.action == 'list':
             permission_classes = [IsAdminUser]
         else:
             permission_classes = [AllowAny]

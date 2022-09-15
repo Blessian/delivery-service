@@ -8,7 +8,8 @@ class DeliverySerializer(serializers.ModelSerializer):
         model = DeliveryLog
         exclude = ['delivery_num']
         read_only_fields = [
-            'finish_date', 'pay_state', 'start_date', 'price', 'buyr_id', 'vccode', 'delivery_num', 'delivery_state'
+            'finish_date', 'pay_state', 'start_date', 'price',
+            'buyr_id', 'buyr_name', 'vccode', 'delivery_num', 'delivery_state'
         ]
 
 

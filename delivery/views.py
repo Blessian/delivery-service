@@ -15,6 +15,8 @@ from coupon.models import Coupon
 
 import pandas as pd
 
+from .utils import validate_date
+
 
 # Create your views here.
 class DeliveryLogViewSet(viewsets.ModelViewSet):
@@ -45,10 +47,11 @@ class DeliveryLogViewSet(viewsets.ModelViewSet):
         """
         queryset = DeliveryLog.objects.all()
         search = self.request.GET.get('search', '')
-        if search:
-            queryset = queryset.filter(
-                Q(start_date_icontains=search) | Q(finish_date_icontains=search) | Q(pay_state_icontains=search)
-            )
+
+        if validate_date(search):
+            queryset = queryset.filter(Q(start_date=search) | Q(finish_date=search))
+        elif search:
+            queryset = queryset.filter(Q(pay_state=search) | Q(buyr_name=search))
         return queryset
 
     def get_permissions(self):
@@ -69,6 +72,7 @@ class DeliveryLogViewSet(viewsets.ModelViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.validated_data['start_date'] = date.today()
             serializer.validated_data['buyr_id'] = request.user.id
+            serializer.validated_data['buyr_name'] = request.user.username
 
             country_code = serializer.validated_data['buyr_country']
             # 엑셀데이터에서 국가코드를 가져옴

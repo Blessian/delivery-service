@@ -17,15 +17,16 @@ class DeliveryLog(models.Model):
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     buyr_id = models.PositiveIntegerField()
-    buyr_city = models.CharField(max_length=50, blank=False, null=False)
+    buyr_name = models.CharField(max_length=150)
+    buyr_city = models.CharField(max_length=50)
 
     # data디렉토리의 엑셀파일에서 국가이름 정보를 가져옴
     file = 'data/Country_code.xlsx'
     df_excel = pd.read_excel(file, header=0)
     BUYR_COUNTRY_CHOICE = [(row.country_code, row.country_name) for idx, row in df_excel.iterrows()]
-    buyr_country = models.CharField(max_length=2, choices=BUYR_COUNTRY_CHOICE, blank=False, null=False)
+    buyr_country = models.CharField(max_length=2, choices=BUYR_COUNTRY_CHOICE)
 
-    buyr_zipx = models.CharField(max_length=10, blank=False, null=False)
+    buyr_zipx = models.CharField(max_length=10)
     vccode = models.PositiveIntegerField()
     delivery_num = models.CharField(max_length=50, blank=True, null=True)
     
