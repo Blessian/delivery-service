@@ -6,14 +6,21 @@ from .models import DeliveryLog
 class DeliverySerializer(serializers.ModelSerializer):
     class Meta:
         model = DeliveryLog
-        fields = '__all__'
+        exclude = ['delivery_num']
+        read_only_fields = [
+            'finish_date', 'pay_state', 'start_date', 'price', 'buyr_id', 'vccode', 'delivery_num', 'delivery_state'
+        ]
 
 
 class DeliveryUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DeliveryLog
         fields = '__all__'
-        read_only_fields = '__all__'
+        read_only_fields = [
+            'id', 'start_date', 'quantity', 'price',
+            'buyr_id', 'buyr_city', 'buyr_country',
+            'buyr_zipx', 'vccode', 'coupon_id', 'finish_date'
+        ]
 
 
 class DeliveryPayStateUpdateSerializer(serializers.ModelSerializer):
@@ -25,4 +32,5 @@ class DeliveryPayStateUpdateSerializer(serializers.ModelSerializer):
 class DeliveryDeliveryStateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DeliveryLog
-        fields = ['id', 'delivery_state']
+        fields = ['id', 'delivery_state', 'delivery_num', 'finish_date']
+        read_only_fields = ['finish_date']
