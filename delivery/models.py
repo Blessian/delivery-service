@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 import pandas as pd
 
@@ -12,6 +11,7 @@ class DeliveryLog(models.Model):
         ('결재완료', '결재완료'),
         ('결재취소', '결재취소')
     ]
+    # 결재 과정이 정상적으로 처리된 뒤에 생성하는 것으로 가정함
     pay_state = models.CharField(max_length=10, choices=PAY_STATE_CHOICE, default='결재완료')
 
     quantity = models.PositiveIntegerField()
@@ -36,4 +36,3 @@ class DeliveryLog(models.Model):
     delivery_state = models.CharField(max_length=10, choices=DELIVERY_STATE, default='배송준비')
 
     coupon_code = models.CharField(max_length=50)
-    discounted = models.PositiveIntegerField()
